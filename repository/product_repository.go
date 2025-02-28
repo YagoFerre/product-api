@@ -45,3 +45,24 @@ func (pr *ProductRepository) GetProducts() ([]model.Product, error) {
 	rows.Close()
 	return productList, nil
 }
+
+func (pr *ProductRepository) CreateProduct(product model.Product) (model.Product, error) {
+	var id int
+
+	query, err := pr.connection.Prepare("INSERT INTO product (name, price) VALUES ($1, $2) RETURNING id")
+	if err != nil {
+		fmt.Println(err)
+		return model.Product{}, err
+	}
+
+	err = query.QueryRow(product.Name, product.Price).Scan(&id)
+	if err != nil {
+		fmt.Println(err)
+		return model.Product{}, err
+	}
+
+	product.ID = id
+
+	query.Close()
+	return product, nil
+}
