@@ -55,7 +55,7 @@ func (pr *ProductRepository) CreateProduct(product model.Product) (model.Product
 		return model.Product{}, err
 	}
 
-	err = query.QueryRow(product.Name, product.Price).Scan(&id)
+	err = query.QueryRow(product.Name, product.Price).Scan(&id) // primeiro valor que retorna do banco atribui a var id int line 50
 	if err != nil {
 		fmt.Println(err)
 		return model.Product{}, err
@@ -65,4 +65,31 @@ func (pr *ProductRepository) CreateProduct(product model.Product) (model.Product
 
 	query.Close()
 	return product, nil
+}
+
+func (pr *ProductRepository) GetProductDetails(id int) (*model.Product, error) {
+	query, err := pr.connection.Prepare("SELECT * FROM product WHERE id = $1")
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	var productObject model.Product
+
+	err = query.QueryRow(id).Scan(
+		&productObject.ID,
+		&productObject.Name,
+		&productObject.Price,
+	)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+
+		fmt.Println(err)
+		return nil, err
+	}
+
+	query.Close()
+	return &productObject, nil
 }
