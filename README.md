@@ -1,4 +1,4 @@
-# README.md para Projeto Docker Compose: Go API com PostgreSQL
+# Go API com PostgreSQL
 
 Este projeto utiliza Docker Compose para orquestrar um ambiente de desenvolvimento contendo uma API desenvolvida em Go e um banco de dados PostgreSQL.
 
@@ -8,30 +8,6 @@ O arquivo `docker-compose.yml` define dois serviços:
 
 - `go_api`: Um serviço que roda uma API em Go.
 - `go_db`: Um serviço de banco de dados PostgreSQL.
-
-### Detalhes dos Serviços
-
-#### go_api
-
-- **Container Name:** `go_api`
-- **Image:** `go-api` (Esta imagem é construída a partir do Dockerfile no diretório raiz.)
-- **Ports:** Mapeia a porta 8000 do host para a porta 8000 do container, permitindo o acesso à API.
-- **Depends On:** Define uma dependência no serviço `go_db`, assegurando que o banco de dados esteja disponível antes de iniciar a API.
-
-#### go_db
-
-- **Container Name:** `go_db`
-- **Image:** `postgres:14`
-- **Environment:**
-  - `POSTGRES_PASSWORD`: Senha para o usuário do banco de dados.
-  - `POSTGRES_USER`: Nome do usuário do banco de dados.
-  - `POSTGRES_DB`: Nome do banco de dados.
-- **Ports:** Mapeia a porta 5432 do host para a porta 5432 do container, permitindo o acesso ao banco de dados.
-- **Volumes:** Persiste os dados do banco de dados usando um volume Docker nomeado `pgdata`.
-
-### Volumes
-
-- `pgdata`: Armazena os dados do PostgreSQL, permitindo que os dados persistam entre as instalações do container.
 
 ## Como usar
 
