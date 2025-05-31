@@ -8,11 +8,11 @@ import (
 )
 
 const (
-	host     = "go_db"
+	host     = "product_db"
 	port     = 5432
 	user     = "postgres"
 	password = "123"
-	dbname   = "go_db"
+	dbname   = "product_db"
 )
 
 func ConnectDatabase() (*sql.DB, error) {

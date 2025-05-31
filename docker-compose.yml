@@ -1,22 +1,22 @@
 version: "3.9"
 
 services:
-  go_api:
-    container_name: go_api
-    image: go-api
+  go_product_api:
+    container_name: go_product_api
+    image: go_product_api
     build: .
     ports:
       - "8000:8000"
     depends_on:
       - go_db
 
-  go_db:
-    container_name: go_db
-    image: postgres:14
+  go_product_api_db:
+    container_name: go_product_api_db
+    image: postgres:16
     environment:
       POSTGRES_PASSWORD: 123
       POSTGRES_USER: postgres
-      POSTGRES_DB: go_db
+      POSTGRES_DB: product_db
     ports:
       - "5432:5432"
     volumes:
